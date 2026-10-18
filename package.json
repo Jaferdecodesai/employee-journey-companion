@@ -1,0 +1,19 @@
+{
+  "name": "journey-companion",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Employee Journey Companion prototype (synthetic data only) on Cloudflare Workers",
+  "scripts": {
+    "dev": "wrangler dev",
+    "test": "node --test test/*.test.js",
+    "e2e": "node scripts/e2e.mjs",
+    "screens": "node scripts/screenshots.mjs",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "axe-core": "^4.14.0",
+    "playwright-core": "^1.64.1",
+    "wrangler": "^4.151.1"
+  }
+}
