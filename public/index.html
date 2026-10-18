@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Journey Companion: onboarding and internal mobility (prototype, synthetic data)</title>
+<meta name="description" content="Employee-side AI companion prototype for onboarding and internal mobility. Synthetic data only.">
+<meta name="theme-color" content="#10233b">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/styles.css">
+<script src="/app.js" defer></script>
+</head>
+<body class="booting">
+<a class="skip" href="#main" data-i18n="skip">Skip to content</a>
+<header class="topbar">
+  <div class="brand">
+    <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><path d="M5 26 C 12 26, 10 6, 18 6 S 27 16, 27 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="1 4.2"/><circle cx="5" cy="26" r="3.2" fill="currentColor"/><circle cx="27" cy="16" r="3.2" fill="none" stroke="currentColor" stroke-width="2.2"/></svg>
+    <div><span class="brand-name" data-i18n="brand">Journey Companion</span><span class="brand-sub" data-i18n="brandSub">Onboarding &amp; internal mobility</span></div>
+  </div>
+  <nav class="views" aria-label="Views" data-i18n-aria="viewsLabel">
+    <button type="button" class="view-tab" data-view="companion" aria-pressed="true" data-i18n="tabCompanion">My companion</button>
+    <button type="button" class="view-tab" data-view="owner" aria-pressed="false" data-i18n="tabOwner">Owner inbox</button>
+    <button type="button" class="view-tab" data-view="stalls" aria-pressed="false" data-i18n="tabStalls">Where journeys stall</button>
+  </nav>
+  <button type="button" id="langToggle" class="lang" lang="ar">عربي</button>
+</header>
+<div class="synthetic-banner" role="note"><strong data-i18n="synthTitle">Prototype</strong> <span data-i18n="synthBody">All people, policies and events are synthetic. Not connected to any live Emirates system.</span></div>
+<main id="main" tabindex="-1">
+  <section id="view-companion" class="view" aria-labelledby="whoTitle">
+    <div class="persona-bar">
+      <h1 id="whoTitle" class="sr-only" data-i18n="whoTitle">Choose a synthetic employee</h1>
+      <p class="persona-label" id="personaLabel" data-i18n="whoLabel">Viewing as (synthetic employee):</p>
+      <div id="personaList" class="persona-list" role="radiogroup" aria-labelledby="personaLabel"></div>
+    </div>
+    <div class="layout">
+      <section class="panel journey" aria-labelledby="journeyTitle">
+        <h2 id="journeyTitle" data-i18n="journeyTitle">Your journey</h2>
+        <div id="nextCard" class="next-card" aria-live="polite"></div>
+        <ol id="route" class="route"></ol>
+      </section>
+      <section class="panel chat" aria-labelledby="chatTitle">
+        <h2 id="chatTitle" data-i18n="chatTitle">Ask your companion</h2>
+        <div id="chatLog" class="chat-log" role="log" aria-live="polite" aria-relevant="additions"></div>
+        <div id="chips" class="chips" aria-label="Suggested questions" data-i18n-aria="suggested"></div>
+        <form id="askForm" class="ask" autocomplete="off">
+          <label for="askInput" class="sr-only" data-i18n="askLabel">Your question</label>
+          <input id="askInput" name="q" maxlength="500" required data-i18n-ph="askPh" placeholder="Ask about a policy, your next step, or a request">
+          <button type="submit" class="btn primary" data-i18n="send">Send</button>
+        </form>
+        <p class="engine-note" id="engineNote"></p>
+      </section>
+      <aside class="side">
+        <section class="panel attention" aria-labelledby="attTitle">
+          <h2 id="attTitle" data-i18n="attTitle">Needs attention</h2>
+          <div id="friction"></div>
+        </section>
+        <section class="panel" aria-labelledby="reqTitle">
+          <h2 id="reqTitle" data-i18n="reqTitle">Start a request</h2>
+          <p class="hint" data-i18n="reqHint">Pre-filled from your journey, and you review it before it goes anywhere.</p>
+          <div id="reqButtons" class="req-buttons"></div>
+          <ul id="reqList" class="req-list"></ul>
+        </section>
+        <section class="panel" aria-labelledby="pulseTitle">
+          <h2 id="pulseTitle" data-i18n="pulseTitle">How is it going? <span class="tag" data-i18n="optional">optional</span></h2>
+          <div id="pulse"></div>
+        </section>
+        <section class="panel mydata-panel" aria-labelledby="mdTitle">
+          <h2 id="mdTitle" data-i18n="mdTitle">My data</h2>
+          <p class="hint" data-i18n="mdHint">See everything the companion holds about you, and delete it.</p>
+          <button type="button" id="openMyData" class="btn" data-i18n="mdOpen">Open My data</button>
+        </section>
+      </aside>
+    </div>
+  </section>
+
+  <section id="view-owner" class="view" hidden aria-labelledby="ownerTitle">
+    <div class="panel wide">
+      <h1 id="ownerTitle" data-i18n="ownerTitle">Owner inbox</h1>
+      <p class="hint" data-i18n="ownerHint">Escalations an employee chose to send. Nothing changes for the employee until the named owner approves.</p>
+      <div id="inbox" class="inbox" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section id="view-stalls" class="view" hidden aria-labelledby="stallTitle">
+    <div class="panel wide">
+      <h1 id="stallTitle" data-i18n="stallTitle">Where journeys stall</h1>
+      <p class="hint" id="stallHint"></p>
+      <div id="stalls" class="stalls"></div>
+    </div>
+  </section>
+</main>
+<footer class="foot"><span data-i18n="foot">Prototype by AqionLabs for the Employee Journey Companion Challenge. Synthetic data only. Not for performance or disciplinary use.</span></footer>
+
+<dialog id="dlg" aria-labelledby="dlgTitle">
+  <div class="dlg-head"><h2 id="dlgTitle"></h2><button type="button" class="icon-btn" id="dlgClose" data-i18n-aria="close" aria-label="Close">✕</button></div>
+  <div id="dlgBody" class="dlg-body"></div>
+</dialog>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
